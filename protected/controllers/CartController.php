@@ -8,6 +8,8 @@ class CartController extends Controller
 	 */
 	public $layout='//layouts/column2';
 
+	public $defaultAction = 'view';
+
 	/**
 	 * @return array action filters
 	 */
@@ -28,16 +30,8 @@ class CartController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','update','delete','add'),
 				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -49,10 +43,10 @@ class CartController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView()
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel(),
 		));
 	}
 
@@ -60,7 +54,7 @@ class CartController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionAdd()
 	{
 		$model=new Cart;
 
@@ -86,7 +80,7 @@ class CartController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel();
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -110,7 +104,7 @@ class CartController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$this->loadModel()->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -129,33 +123,32 @@ class CartController extends Controller
 	}
 
 	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Cart('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Cart']))
-			$model->attributes=$_GET['Cart'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
 	 * @return Cart the loaded model
 	 * @throws CHttpException
 	 */
-	public function loadModel($id)
+	public function loadModel()
 	{
-		$model=Cart::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
+
+		// Get or create the cart session ID:
+		if (isset(Yii::app()->request->cookies['SESSION'])) {
+			$sess = Yii::app()->request->cookies['SESSION'];
+		} else {
+			$sess = bin2hex(openssl_random_pseudo_bytes(16));
+		}
+
+		// Send the cookie:
+		Yii::app()->request->cookies['SESSION'] = new CHttpCookie('SESSION', $sess, array('expire' => time()+(60*60*24*30)));
+
+		$cart=Cart::model()->find('customer_session_id=:sess', array(':sess' => $sess));
+		if($cart===null) {
+			$cart = new Cart();
+			$cart->customer_session_id = $sess;
+			$cart->save();
+		}
+		return $cart;
 	}
 
 	/**
