@@ -29,5 +29,4 @@
 	<?php echo CHtml::encode($data->date_published); ?>
 	<br />
 
-
 </div>

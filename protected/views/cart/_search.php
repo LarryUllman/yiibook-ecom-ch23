@@ -22,16 +22,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'book_id'); ?>
-		<?php echo $form->textField($model,'book_id',array('size'=>10,'maxlength'=>10)); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->label($model,'quantity'); ?>
-		<?php echo $form->textField($model,'quantity'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'date_modified'); ?>
 		<?php echo $form->textField($model,'date_modified'); ?>
 	</div>

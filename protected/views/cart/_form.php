@@ -26,18 +26,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'book_id'); ?>
-		<?php echo $form->textField($model,'book_id',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'book_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'quantity'); ?>
-		<?php echo $form->textField($model,'quantity'); ?>
-		<?php echo $form->error($model,'quantity'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'date_modified'); ?>
 		<?php echo $form->textField($model,'date_modified'); ?>
 		<?php echo $form->error($model,'date_modified'); ?>

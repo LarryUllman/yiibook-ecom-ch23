@@ -29,3 +29,6 @@ $this->menu=array(
 		'date_published',
 	),
 )); ?>
+
+
+<?php echo CHtml::link('Add to Cart', array ('/cart/add', 'id' => $model->id)); ?>

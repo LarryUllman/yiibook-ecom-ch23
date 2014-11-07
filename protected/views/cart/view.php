@@ -23,8 +23,6 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'customer_session_id',
-		'book_id',
-		'quantity',
 		'date_modified',
 	),
 )); ?>

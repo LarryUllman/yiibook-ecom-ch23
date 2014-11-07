@@ -9,6 +9,8 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Buy My Books!',
 
+	'defaultController' => 'book',
+
 	// preloading 'log' component
 	'preload'=>array('log'),
 
