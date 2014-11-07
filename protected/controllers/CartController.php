@@ -51,25 +51,33 @@ class CartController extends Controller
 	}
 
 	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * Creates a new CartContent model.
 	 */
-	public function actionAdd()
+	public function actionAdd($id)
 	{
-		$model=new Cart;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		// Need the cart:
+		$cart = $this->loadModel();
 
-		if(isset($_POST['Cart']))
-		{
-			$model->attributes=$_POST['Cart'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		// Check for the item already being in the cart:
+		$item=CartContent::model()->find('cart_id=:cart AND book_id=:book', array(':cart' => $cart->id, ':book' => $id));
+
+		// If the item already exists, add another:
+		if($item!==null) {
+			$item->quantity = $item->quantity + 1;
+		} else { // New item:
+			$item = new CartContent();
+			$item->cart_id = $cart->id;
+			$item->book_id = $id;
+			$item->quantity = 1;
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
+		// Save the item:
+		$item->save();
+
+		// Show the cart contents:
+		$this->render('view',array(
+			'model'=>$cart,
 		));
 	}
 
