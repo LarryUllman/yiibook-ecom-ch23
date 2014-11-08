@@ -28,6 +28,11 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
+		'pay'=>array(
+			'public_key' => 'pk_test_4Lh0EHUdD5gt0cr5xXizxLMK',
+			'private_key' => 'sk_test_4Lh0OSUArsVjsBdBfx0EQFmN',
+			'redirectOnSuccess' => '/order/create'
+		)
 	),
 
 	// application components

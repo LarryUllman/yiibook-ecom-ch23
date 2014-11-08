@@ -33,3 +33,5 @@ $this->menu=array(
 )); ?>
 
 <h3>Total: $<?php echo $model->getTotal(); ?></h3>
+
+<?php echo CHtml::link('Checkout', array ('/pay')); ?>

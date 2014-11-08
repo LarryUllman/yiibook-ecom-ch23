@@ -7,11 +7,11 @@ class DefaultController extends Controller
 //			'httpsOnly + index',
 		);
 	}
-	public function filterHttpsOnly($fc) { 
-		if (Yii::app()->getRequest()->getIsSecureConnection()) { 
+	public function filterHttpsOnly($fc) {
+		if (Yii::app()->getRequest()->getIsSecureConnection()) {
 			$fc->run();
 		} else {
-			throw new CHttpException(400, 'This page needs to be accessed securely.'); 
+			throw new CHttpException(400, 'This page needs to be accessed securely.');
 		}
 	}
 
@@ -19,15 +19,15 @@ class DefaultController extends Controller
 	{
 		$model=new Payment;
 
-		// Should come from elsewhere:
-		$model->amount = 12575;
+		$model->amount = Yii::app()->controller->module->amount;
+
 		if(isset($_POST['Payment'])) {
 			$model->attributes=$_POST['Payment'];
 			// Temporary:
 			$model->charge_id = 'temp';
 			if($model->validate()) {
 				// Charge via Stripe!
-				try {	
+				try {
 					Yii::import('pay.vendors.stripe.lib.Stripe');
 					Stripe::setApiKey(Yii::app()->controller->module->private_key);
 					$charge = Stripe_Charge::create(array(
