@@ -32,4 +32,4 @@ $this->menu=array(
 	),
 )); ?>
 
-<h3>Total: $ </h3>
+<h3>Total: $<?php echo $model->getTotal(); ?></h3>

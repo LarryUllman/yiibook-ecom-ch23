@@ -72,6 +72,15 @@ class Cart extends CActiveRecord
 		));
 	}
 
+	public function getTotal()
+    {
+
+    	$id = $this->id;
+		$cmd = Yii::app()->db->createCommand('SELECT SUM(quantity * book.price) FROM cart_content JOIN book ON book_id=book.id WHERE cart_id=:id');
+		$cmd->bindParam(':id', $id, PDO::PARAM_INT);
+		return $cmd->queryScalar();
+    }
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
