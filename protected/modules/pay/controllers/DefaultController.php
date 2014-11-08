@@ -40,7 +40,12 @@ class DefaultController extends Controller
 					if ($charge->paid == true) {
 						$model->charge_id = $charge->id;
 						$model->save();
-						$this->redirect(array('thanks', 'amount' => $model->amount));
+						if (!empty(Yii::app()->controller->module->redirectOnSuccess)) {
+							Yii::app()->user->setFlash('success', $model->id);
+							$this->redirect(array(Yii::app()->controller->module->redirectOnSuccess));
+						} else {
+							$this->redirect(array('thanks', 'amount' => $model->amount));
+						}
 					}
 				} catch (Stripe_CardError $e) {
 					$e_json = $e->getJsonBody();
@@ -64,7 +69,7 @@ class DefaultController extends Controller
 	}
 	public function actionThanks($amount) {
 		$this->render('thanks',array(
-			'amount'=>$amount,
+			'amount'=>Yii::app()->controller->module->amount,
 		));
 	}
 
