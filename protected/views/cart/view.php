@@ -16,13 +16,20 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Cart #<?php echo $model->id; ?></h1>
+<h1>Cart Contents</h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'customer_session_id',
-		'date_modified',
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+	'id'=>'cart-grid',
+	'dataProvider'=>$model->getContents(),
+	'columns'=>array(
+		'book.title',
+		'book.price',
+		'quantity',
+		array(
+			'class'=>'CButtonColumn',
+			'template'=>'{delete}'
+		),
 	),
 )); ?>
+
+<h3>Total: $ </h3>

@@ -46,7 +46,7 @@ class CartController extends Controller
 	public function actionView()
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel(),
+			'model'=>$this->loadModel()
 		));
 	}
 
@@ -77,7 +77,7 @@ class CartController extends Controller
 
 		// Show the cart contents:
 		$this->render('view',array(
-			'model'=>$cart,
+			'model'=>$cart
 		));
 	}
 

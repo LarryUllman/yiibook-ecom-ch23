@@ -62,6 +62,16 @@ class Cart extends CActiveRecord
 		);
 	}
 
+	public function getContents()
+	{
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('cart_id',$this->id, true);
+		return new CActiveDataProvider('CartContent', array(
+			'criteria'=>$criteria,
+		));
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
