@@ -1,4 +1,4 @@
-yiibook-cms-ch22
+yiibook-ecom-ch23
 ================
 
 This is the e-commerce example from Chapter 23 of "The Yii Book" (the first edition). This code is for Yii 1.
@@ -7,9 +7,7 @@ The book itself explains the code in detail. You can buy the book at [http://yii
 
 ## Installing
 
-You can find the SQL needed to create and populate the database in the **protected/data/ch23.sql** file.
-
-You'll need to run `composer install` from within the **protected** directory to install the ElasticSearch library. This means you'll also need to have [Composer](https://getcomposer.org/) installed and have [ElasticSearch](http://www.elasticsearch.org/) installed and running. See Chapter 20 of the book for details on using ElasticSearch.
+You can find the SQL needed to create and populate the database in the **protected/data/ch23.sql** file. You'll also need to run the migration to create the needed table for the "pay" module.
 
 ## What's Missing
 
@@ -17,16 +15,12 @@ This is not an absolutely complete example, but it's much more complete than any
 
 But, before anyone says anything, just a few things I'd probably do or add include:
 
-* Create a synopsis of a page ability (for SEO and excerpts)
-* Make comments approvable
+* Add more book info (for SEO and excerpts)
 * Write page details to meta tags in the HTML
-* Add a file upload for HTML editor
+* Implement reviews
 * Ajax-ify more things
 * Add caching
-* Add edit links to the public pages (if logged in)
-* Complete the user management (ability to change password, admin ability to change user's type)
-
-Also, there's a minor issue with the styling of the pagination links on the home page and form errors not being styled properly, but...c'est la vie. If these things bother you, I encourage you to fix them! (Yes, obviously, for a real site, I'd fix them, but this isn't a real site.)
+* Complete the user management (password recovery, ability to change password, etc.)
 
 ## Problems, Questions, and Help?
 
