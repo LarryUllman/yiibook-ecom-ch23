@@ -83,9 +83,8 @@ class OrderController extends Controller
 		$order->date_entered = $payment['date_added'];
 		$order->save();
 
-		// store the order contents
-		// clear the cart
-
+		// Clear the cart:
+		$cart->clear();
 
 		$this->render('create',array(
 			'order'=>$order
