@@ -70,23 +70,22 @@ class OrderController extends Controller
 
 		$customer = new Customer;
 		$customer->email = $payment['email'];
-//		$customer->save();
+		$customer->save();
 
+		// Get the cart:
 		$cart = Utilities::getCart();
-echo '<pre>' . print_r($cart, 1) . '</pre>';
-		exit;
 
-		// get the cart
-		// create the order
-		// store the order contents
-		// clear the cart
-
+		// Create the order:
 		$order=new Order;
 		$order->customer_id = $customer->id;
 		$order->payment_id = $payment['id'];
 		$order->total = $payment['amount'];
 		$order->date_entered = $payment['date_added'];
 		$order->save();
+
+		// store the order contents
+		// clear the cart
+
 
 		$this->render('create',array(
 			'order'=>$order

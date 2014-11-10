@@ -32,12 +32,12 @@ class Order extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('customer_id, charge_id, total, date_entered', 'required'),
+			array('customer_id, payment_id, total, date_entered', 'required'),
 			array('customer_id, total', 'length', 'max'=>10),
-			array('charge_id', 'length', 'max'=>45),
+			array('payment_id', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, customer_id, charge_id, total, date_entered', 'safe', 'on'=>'search'),
+			array('id, customer_id, payment_id, total, date_entered', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,7 +62,7 @@ class Order extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'customer_id' => 'Customer',
-			'charge_id' => 'Charge',
+			'payment_id' => 'Payment',
 			'total' => 'Total',
 			'date_entered' => 'Date Entered',
 		);
@@ -106,5 +106,18 @@ class Order extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function afterSave()
+	{
+		// Store the order contents in the order contents table:
+		$cart = Utilities::getCart();
+		$items = $cart->cartContents;
+		$cmd = Yii::app()->db->createCommand('INSERT INTO order_content (order_id, book_id, quantity, price_per) SELECT :order_id, cc.book_id, cc.quantity, b.price FROM cart_content AS cc, book AS b WHERE (b.id=cc.book_id) AND (cc.cart_id=:cart_id)');
+		$order_id = $this->id;
+		$cart_id = $cart->id;
+		$cmd->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+		$cmd->bindParam(':cart_id', $cart_id, PDO::PARAM_INT);
+		$cmd->execute();
 	}
 }
