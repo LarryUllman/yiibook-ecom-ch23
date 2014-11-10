@@ -31,10 +31,12 @@ class Customer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('email, date_entered', 'required'),
+			array('email', 'required'),
 			array('get_emails', 'numerical', 'integerOnly'=>true),
 			array('email', 'length', 'max'=>80),
 			array('pass', 'length', 'max'=>255),
+			// Set the date_entered to NOW():
+			array('date_entered', 'default', 'value'=>new CDbExpression('NOW()'), 'on'=>'insert'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, email, pass, get_emails, date_entered', 'safe', 'on'=>'search'),

@@ -27,16 +27,12 @@ class OrderController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+			array('allow',  // allow all users to perform 'create' and 'view' actions
+				'actions'=>array('create','view'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -62,69 +58,37 @@ class OrderController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Order;
+		// Get the payment info:
+		$cmd = Yii::app()->db->createCommand('SELECT * FROM payment WHERE id=:id');
+		$payment_id = 1;
+		$cmd->bindParam(':id', $payment_id, PDO::PARAM_INT);
+		$payment = $cmd->queryRow();
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Order']))
-		{
-			$model->attributes=$_POST['Order'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		if ($payment === null) {
+			throw new CHttpException(404,'This page was accessed in error.');
 		}
+
+		$customer = new Customer;
+		$customer->email = $payment['email'];
+		$customer->save();
+echo '<pre>' . print_r($customer, 1) . '</pre>';
+		exit;
+
+		// create the customer
+		// get the cart
+		// create the order
+		// store the order contents
+		// clear the cart
+
+		$order=new Order;
+		$order->customer_id = $customer->id;
+		$order->payment_id = $payment['id'];
+		$order->total = $payment['amount'];
+		$order->date_entered = $payment['date_added'];
+		$order->save();
 
 		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Order']))
-		{
-			$model->attributes=$_POST['Order'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Order');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'order'=>$order
 		));
 	}
 
