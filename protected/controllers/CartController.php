@@ -46,7 +46,8 @@ class CartController extends Controller
 	public function actionView()
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel()
+			'model'=> Utilities::getCart()
+
 		));
 	}
 
@@ -57,7 +58,7 @@ class CartController extends Controller
 	{
 
 		// Need the cart:
-		$cart = $this->loadModel();
+		$cart = Utilities::getCart();
 
 		// Check for the item already being in the cart:
 		$item=CartContent::model()->find('cart_id=:cart AND book_id=:book', array(':cart' => $cart->id, ':book' => $id));
@@ -88,7 +89,8 @@ class CartController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel();
+		$model= Utilities::getCart();
+
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -112,7 +114,8 @@ class CartController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel()->delete();
+		$cart = Utilities::getCart();
+		$cart->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -128,35 +131,6 @@ class CartController extends Controller
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Cart the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel()
-	{
-
-		// Get or create the cart session ID:
-		if (isset(Yii::app()->request->cookies['SESSION'])) {
-			$sess = Yii::app()->request->cookies['SESSION'];
-		} else {
-			$sess = bin2hex(openssl_random_pseudo_bytes(16));
-		}
-
-		// Send the cookie:
-		Yii::app()->request->cookies['SESSION'] = new CHttpCookie('SESSION', $sess, array('expire' => time()+(60*60*24*30)));
-
-		$cart=Cart::model()->find('customer_session_id=:sess', array(':sess' => $sess));
-		if($cart===null) {
-			$cart = new Cart();
-			$cart->customer_session_id = $sess;
-			$cart->save();
-		}
-		return $cart;
 	}
 
 	/**
