@@ -86,7 +86,7 @@ class OrderController extends Controller
 		// Clear the cart:
 		$cart->clear();
 
-		$this->render('create',array(
+		$this->render('view',array(
 			'order'=>$order
 		));
 	}

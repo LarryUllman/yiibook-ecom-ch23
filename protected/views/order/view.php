@@ -22,9 +22,14 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'customer_id',
-		'charge_id',
-		'total',
-		'date_entered',
+		'customer.email',
+		array(
+			'name' => 'total',
+			'value' => Utilities::formatAmount($model->total)
+		),
+		array(
+			'name' => 'date_entered',
+			'value' => Utilities::formatDate($model->date_entered)
+		),
 	),
 )); ?>

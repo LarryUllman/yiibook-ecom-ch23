@@ -60,7 +60,7 @@ class Order extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id' => 'Order Number',
 			'customer_id' => 'Customer',
 			'payment_id' => 'Payment',
 			'total' => 'Total',
@@ -88,7 +88,7 @@ class Order extends CActiveRecord
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('customer_id',$this->customer_id,true);
-		$criteria->compare('charge_id',$this->charge_id,true);
+		$criteria->compare('payment_id',$this->charge_id,true);
 		$criteria->compare('total',$this->total,true);
 		$criteria->compare('date_entered',$this->date_entered,true);
 
