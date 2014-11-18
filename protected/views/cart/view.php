@@ -28,14 +28,10 @@ $this->menu=array(
 		array(
 			'class'=>'CButtonColumn',
 			'header'=>'Action',
-			'template'=>'{view}{update}{delete}',
+			'template'=>'{view}{delete}',
 			'buttons'=>array(
 				'view'=>array(
 					'label' => 'View',
-					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->id))'
-				),
-				'update'=>array(
-					'label' => 'Update',
 					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->id))'
 				),
 				'delete'=>array(
