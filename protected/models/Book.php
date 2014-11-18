@@ -37,6 +37,7 @@ class Book extends CActiveRecord
 			array('title', 'length', 'max'=>255),
 			array('price', 'length', 'max'=>10),
 			array('author', 'length', 'max'=>60),
+			array('filename', 'length', 'max'=>60),
 			array('description', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

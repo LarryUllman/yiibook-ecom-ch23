@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `yiibook_ch23`.`book` (
   `price` INT UNSIGNED NOT NULL,
   `description` TEXT NULL,
   `author` VARCHAR(60) NOT NULL,
+  `filename` VARCHAR(60) NOT NULL,
   `date_published` DATE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

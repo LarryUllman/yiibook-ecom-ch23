@@ -116,7 +116,7 @@ class BookController extends Controller
 		// Get the book information:
 		$file = Yii::getPathOfAlias('application') . '/books/' . $id . '.pdf';
 		$fs = filesize($file);
-		$title = 'book.pdf';
+		$title = $book->filename;
 
 		// Send the content information:
 		header("Pragma: public"); // required
