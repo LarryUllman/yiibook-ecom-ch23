@@ -109,11 +109,32 @@ class BookController extends Controller
 	 */
 	public function actionDownload($id)
 	{
-		$this->loadModel($id)->delete();
+		$book = $this->loadModel($id);
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		// Add code to verify right to download
+
+		// Get the book information:
+		$file = Yii::getPathOfAlias('application') . '/books/' . $id . '.pdf';
+		$fs = filesize($file);
+		$title = 'book.pdf';
+
+		// Send the content information:
+		header("Pragma: public"); // required
+	    header("Expires: 0");
+	    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+	    header("Cache-Control: private",false); // required for certain browsers
+	    header("Content-Description: File Transfer");
+	    header("Content-Transfer-Encoding: binary");
+		header("Content-Type: application/pdf");
+		header("Content-Disposition: attachment; filename=\"$title\"");
+		header("Content-Length: $fs");
+
+		// Send the file:
+		readfile ($file);
+
+		// Stop the script:
+		Yii::app()->end();
+
 	}
 
 	/**
