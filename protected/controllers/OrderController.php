@@ -72,6 +72,8 @@ class OrderController extends Controller
 		$customer->email = $payment['email'];
 		$customer->save();
 
+		// Store the email address in the session:
+
 		// Get the cart:
 		$cart = Utilities::getCart();
 

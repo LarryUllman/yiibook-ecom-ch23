@@ -33,3 +33,8 @@ $this->menu=array(
 		),
 	),
 )); ?>
+
+
+<?php if (Yii::app()->user->isGuest) {
+echo '<p>You will need to create an account in order to download the purchase(s).</p>';
+} ?>
