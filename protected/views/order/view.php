@@ -33,8 +33,12 @@ $this->menu=array(
 		),
 	),
 )); ?>
-
-
-<?php if (Yii::app()->user->isGuest) {
-echo '<p>You will need to create an account in order to download the purchase(s).</p>';
-} ?>
+<br />
+<h2>Download Purchases</h2>
+<ul>
+<?php $items = $model->orderContents;
+foreach ($items as $item) {
+	echo '<li>' . CHtml::link($item->book->title, array ('/book/download', 'id' => $item->book_id)) . '</li>';
+}
+?>
+</ul>
