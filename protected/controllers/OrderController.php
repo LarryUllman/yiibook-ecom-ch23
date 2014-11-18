@@ -53,21 +53,33 @@ class OrderController extends Controller
 	 */
 	public function actionCreate()
 	{
+
+		// Must have processed a charge before coming here:
+		if (!isset(Yii::app()->session['payment_id'])) {
+			throw new CHttpException(400, 'You have not made a purchase.');
+		}
+
 		// Get the payment info:
 		$cmd = Yii::app()->db->createCommand('SELECT * FROM payment WHERE id=:id');
-		$payment_id = 1;
+		$payment_id = Yii::app()->session['payment_id'];
 		$cmd->bindParam(':id', $payment_id, PDO::PARAM_INT);
 		$payment = $cmd->queryRow();
 
 		if ($payment === null) {
-			throw new CHttpException(404,'This page was accessed in error.');
+			throw new CHttpException(404,'You have not made a purchase.');
 		}
 
-		$customer = new Customer;
-		$customer->email = $payment['email'];
-		$customer->save();
+		// Fetch the customer, if existing:
+		$customer=Customer::model()->find('email=:email', array(':email' => $payment['email']));
 
-		// Store the email address in the session:
+		// If no customer, create a new one:
+		if($customer===null) {
+			$customer = new Customer;
+			$customer->email = $payment['email'];
+			$customer->save();
+		}
+
+		// Store the email address in the session, if desired.
 
 		// Get the cart:
 		$cart = Utilities::getCart();
@@ -84,7 +96,7 @@ class OrderController extends Controller
 		$cart->clear();
 
 		$this->render('view',array(
-			'order'=>$order
+			'model'=>$order
 		));
 	}
 

@@ -43,7 +43,6 @@ class DefaultController extends Controller
 
 						// Store values in session:
 						Yii::app()->session['payment_id'] = $model->id;
-						Yii::app()->session['email'] = $model->email;
 
 						// Redirect:
 						if (!empty(Yii::app()->controller->module->redirectOnSuccess)) {
