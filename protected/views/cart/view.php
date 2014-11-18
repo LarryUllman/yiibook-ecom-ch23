@@ -27,7 +27,22 @@ $this->menu=array(
 		'quantity',
 		array(
 			'class'=>'CButtonColumn',
-			'template'=>'{delete}'
+			'header'=>'Action',
+			'template'=>'{view}{update}{delete}',
+			'buttons'=>array(
+				'view'=>array(
+					'label' => 'View',
+					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->id))'
+				),
+				'update'=>array(
+					'label' => 'Update',
+					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->id))'
+				),
+				'delete'=>array(
+					'label' => 'Delete',
+					'url' => 'Yii::app()->createUrl("cart/deleteItem", array("id"=>$data->id))'
+				),
+			)
 		),
 	),
 )); ?>

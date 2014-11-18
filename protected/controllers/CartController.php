@@ -29,8 +29,8 @@ class CartController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','update','delete','add'),
+			array('allow',  // allow all users to perform everything
+				'actions'=>array('index','view','update','delete','add','deleteItem'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -121,6 +121,22 @@ class CartController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
+
+	/**
+	 * Deletes a particular item from the cart.
+	 * If deletion is successful, the browser will be redirected to the 'admin' page.
+	 * @param integer $id the ID of the model to be deleted
+	 */
+	public function actionDeleteItem($id)
+	{
+		$model=CartContent::model()->findByPk($id);
+		$model->delete();
+
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+
 
 	/**
 	 * Lists all models.
