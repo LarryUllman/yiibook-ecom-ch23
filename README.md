@@ -20,12 +20,12 @@ But, before anyone says anything, just a few things I'd probably do or add inclu
 * Implement reviews
 * Ajax-ify more things
 * Add caching
-* Add a link to view the cart contents
 * Improve the books/index layout
 * Improve the book/view layout
 * Get rid of anything unnecessary
 * Add the ability to edit the cart's contents inline
-* Complete the user management (password recovery, ability to change password, etc.)
+* Complete the user management (create account, login/logout, password recovery, ability to change password, etc.)
+* Harden the site (for example, refreshing order/create doesn't create another, empty order)
 
 ## Problems, Questions, and Help?
 
