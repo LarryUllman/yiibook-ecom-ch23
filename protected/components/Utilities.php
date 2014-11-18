@@ -26,9 +26,9 @@ class Utilities {
 		return '$' . number_format($amount/100, 2);
 	}
 
-	public static function formatDate($date)
+	public static function formatDate($date, $format = 'Y-m-d H:i:s')
 	{
-		return DateTime::createFromFormat('Y-m-d H:i:s', $date)->format('M j, Y');
+		return DateTime::createFromFormat($format, $date)->format('M. j, Y');
 
 	}
 
