@@ -5,7 +5,7 @@
 
 <div class="view">
 
-	<?php echo CHtml::link('<img src="images/' . $data->id . '.jpg">', array('view', 'id'=>$data->id)); ?>
+	<?php echo CHtml::link('<img src="/images/' . $data->id . '.jpg">', array('view', 'id'=>$data->id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('title')); ?>:</b>
@@ -14,10 +14,6 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('price')); ?>:</b>
 	<?php echo Utilities::formatAmount($data->price); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('description')); ?>:</b>
-	<?php echo CHtml::encode($data->description); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author')); ?>:</b>

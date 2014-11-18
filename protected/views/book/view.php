@@ -18,17 +18,31 @@ $this->menu=array(
 
 <h1>View Book #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		'title',
-		'price',
-		'description',
-		'author',
-		'date_published',
-	),
-)); ?>
+<div class="view">
 
+	<?php echo '<img src="/images/' . $model->id . '.jpg">'; ?>
+	<br />
+
+	<b><?php echo CHtml::encode($model->getAttributeLabel('title')); ?>:</b>
+	<?php echo CHtml::encode($model->title); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($model->getAttributeLabel('price')); ?>:</b>
+	<?php echo Utilities::formatAmount($model->price); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($model->getAttributeLabel('description')); ?>:</b>
+	<?php echo CHtml::encode($model->description); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($model->getAttributeLabel('author')); ?>:</b>
+	<?php echo CHtml::encode($model->author); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($model->getAttributeLabel('date_published')); ?>:</b>
+	<?php echo Utilities::formatDate($model->date_published, 'Y-m-d'); ?>
+	<br />
+
+</div>
 
 <?php echo CHtml::link('Add to Cart', array ('/cart/add', 'id' => $model->id)); ?>

@@ -23,7 +23,10 @@ $this->menu=array(
 	'dataProvider'=>$model->getContents(),
 	'columns'=>array(
 		'book.title',
-		'book.price',
+		array(
+		'name' => 'Price',
+		'value' => 'Utilities::formatAmount($data->book->price)'
+		),
 		'quantity',
 		array(
 			'class'=>'CButtonColumn',
