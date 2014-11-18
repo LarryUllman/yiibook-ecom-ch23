@@ -40,8 +40,13 @@ class DefaultController extends Controller
 					if ($charge->paid == true) {
 						$model->charge_id = $charge->id;
 						$model->save();
+
+						// Store values in session:
+						Yii::app()->session['payment_id'] = $model->id;
+						Yii::app()->session['email'] = $model->email;
+
+						// Redirect:
 						if (!empty(Yii::app()->controller->module->redirectOnSuccess)) {
-							Yii::app()->user->setFlash('success', $model->id);
 							$this->redirect(array(Yii::app()->controller->module->redirectOnSuccess));
 						} else {
 							$this->redirect(array('thanks', 'amount' => $model->amount));

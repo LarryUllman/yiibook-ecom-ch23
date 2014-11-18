@@ -30,15 +30,11 @@ class PayModule extends CWebModule
 		if(parent::beforeControllerAction($controller, $action))
 		{
 
-			// Get the cart session ID:
-			if (isset(Yii::app()->request->cookies['SESSION'])) {
-				$sess = Yii::app()->request->cookies['SESSION'];
-			}
-			$cart=Cart::model()->find('customer_session_id=:sess', array(':sess' => $sess));
-			if($cart===null) {
+			// Get the cart:
+			$cart = Utilities::getCart();
+			$this->amount = $cart->getTotal();
+			if($this->amount < 50) {
 				throw new CException('You have nothing to purchase.');
-			} else {
-				$this->amount = $cart->getTotal();
 			}
 
 			// this method is called before any module controller action is performed
