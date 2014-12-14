@@ -81,9 +81,6 @@ class OrderController extends Controller
 
 		// Store the email address in the session, if desired.
 
-		// Get the cart:
-		$cart = Utilities::getCart();
-
 		// Create the order:
 		$order=new Order;
 		$order->customer_id = $customer->id;
@@ -91,9 +88,6 @@ class OrderController extends Controller
 		$order->total = $payment['amount'];
 		$order->date_entered = $payment['date_added'];
 		$order->save();
-
-		// Clear the cart:
-		$cart->clear();
 
 		$this->render('view',array(
 			'model'=>$order

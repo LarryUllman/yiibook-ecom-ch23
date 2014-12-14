@@ -35,7 +35,7 @@ $this->menu=array(
 			'buttons'=>array(
 				'view'=>array(
 					'label' => 'View',
-					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->id))'
+					'url' => 'Yii::app()->createUrl("book/view", array("id"=>$data->book->id))'
 				),
 				'delete'=>array(
 					'label' => 'Delete',

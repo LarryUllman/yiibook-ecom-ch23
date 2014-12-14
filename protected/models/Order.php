@@ -112,7 +112,6 @@ class Order extends CActiveRecord
 	{
 		// Store the order contents in the order contents table:
 		$cart = Utilities::getCart();
-		$items = $cart->cartContents;
 		$cmd = Yii::app()->db->createCommand('INSERT INTO order_content (order_id, book_id, quantity, price_per) SELECT :order_id, cc.book_id, cc.quantity, b.price FROM cart_content AS cc, book AS b WHERE (b.id=cc.book_id) AND (cc.cart_id=:cart_id)');
 		$order_id = $this->id;
 		$cart_id = $cart->id;

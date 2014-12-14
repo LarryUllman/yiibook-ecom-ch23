@@ -29,8 +29,8 @@ return array(
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
 		'pay'=>array(
-			'public_key' => 'pk_test_4Lh0EHUdD5gt0cr5xXizxLMK',
-			'private_key' => 'sk_test_4Lh0OSUArsVjsBdBfx0EQFmN',
+			'public_key' => 'pk_test_XXXX',
+			'private_key' => 'sk_test_XXXX',
 			'redirectOnSuccess' => '/order/create'
 		)
 	),

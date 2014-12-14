@@ -115,11 +115,11 @@ class BookController extends Controller
 
 		// Send the content information:
 		header("Pragma: public"); // required
-	    header("Expires: 0");
-	    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-	    header("Cache-Control: private",false); // required for certain browsers
-	    header("Content-Description: File Transfer");
-	    header("Content-Transfer-Encoding: binary");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private",false); // required for certain browsers
+		header("Content-Description: File Transfer");
+		header("Content-Transfer-Encoding: binary");
 		header("Content-Type: application/pdf");
 		header("Content-Disposition: attachment; filename=\"$title\"");
 		header("Content-Length: $fs");
