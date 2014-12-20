@@ -16,7 +16,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>View Book #<?php echo $model->id; ?></h1>
+<h1><?php echo CHtml::encode($model->title); ?></h1>
 
 <div class="view">
 
