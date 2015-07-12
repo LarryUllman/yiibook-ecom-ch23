@@ -79,7 +79,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `yiibook_ch23`.`order` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` INT UNSIGNED NOT NULL,
-  `payment_id` payment_id INT UNSIGNED NOT NULL,
+  `payment_id` INT UNSIGNED NOT NULL,
   `total` INT UNSIGNED NOT NULL,
   `date_entered` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `yiibook_ch23`.`order` (
     FOREIGN KEY (`payment_id`)
     REFERENCES `yiibook_ch23`.`payment` (`id`)
     ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON UPDATE RESTRICT),
   CONSTRAINT `fk_orders_users`
     FOREIGN KEY (`customer_id`)
     REFERENCES `yiibook_ch23`.`customer` (`id`)
@@ -129,7 +129,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `yiibook_ch23`.`download` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `customer_id` INT UNSIGNED NOT NULL,
-  `book_id` SMALLINT UNSIGNED NOT NULL,
+  `book_id` INT UNSIGNED NOT NULL,
   `date_entered` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `fk_downloads_users1_idx` (`customer_id` ASC),
